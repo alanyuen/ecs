@@ -125,7 +125,7 @@ namespace Leopotam.Ecs {
                     _namedRunSystems[namedRunSystem.GetHashCode ()] = _runSystems.Count;
                 }
                 else {
-                    _namedRunSystems[typeof(system).Name.GetHashCode ()] = _runSystems.Count;
+                    _namedRunSystems[system.GetType().Name.GetHashCode ()] = _runSystems.Count;
                 }
                 _runSystems.Add (new EcsSystemsRunItem () { Active = true, System = (IEcsRunSystem) system });
             }
@@ -135,7 +135,7 @@ namespace Leopotam.Ecs {
         public int GetNamedRunSystem (string name) {
             return _namedRunSystems.TryGetValue (name.GetHashCode (), out var idx) ? idx : -1;
         }
-        
+
         public int GetNamedRunSystem<T>() {
             return _namedRunSystems.TryGetValue (typeof(T).Name.GetHashCode (), out var idx) ? idx : -1;
         }
