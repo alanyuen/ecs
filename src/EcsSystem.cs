@@ -105,6 +105,11 @@ namespace Leopotam.Ecs {
         public EcsSystems (EcsWorld world, string name = null) {
             World = world;
             Name = name;
+
+            if(name != null)
+            {
+                World.AddNamedSystems(this, name);
+            }
         }
 
         /// <summary>

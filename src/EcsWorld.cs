@@ -25,6 +25,7 @@ namespace Leopotam.Ecs {
         protected readonly Dictionary<int, EcsGrowList<EcsFilter>> FilterByIncludedComponents = new Dictionary<int, EcsGrowList<EcsFilter>> (64);
         protected readonly Dictionary<int, EcsGrowList<EcsFilter>> FilterByExcludedComponents = new Dictionary<int, EcsGrowList<EcsFilter>> (64);
         protected readonly Dictionary<int, EcsFilter> OneFrameFilters = new Dictionary<int, EcsFilter> (64);
+        protected readonly Dictionary<string, EcsSystems> NamedSystems = new Dictionary<string, EcsSystems>(8);
 #if DEBUG
         internal readonly List<IEcsWorldDebugListener> DebugListeners = new List<IEcsWorldDebugListener> (4);
         protected bool IsDestroyed;
@@ -258,6 +259,41 @@ namespace Leopotam.Ecs {
                 OneFrameComponents = OneFrameFilters.Count
             };
             return stats;
+        }
+
+        /// <summary>
+        /// Add ecs systems to list.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void AddNamedSystems(EcsSystems systems, string name)
+        {
+#if DEBUG
+            if (NamedSystems.ContainsKey(name)) { throw new Exception ("Cant add duplicate system."); }
+#endif
+            NamedSystems.Add(name, systems);
+        }
+
+        /// <summary>
+        /// Remove ecs systems from list.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void RemoveNamedSystems(EcsSystems system, string name)
+        {
+#if DEBUG
+            if (!NamedSystems.ContainsKey(name)) { throw new Exception ("Cant remove system."); }
+#endif
+            NamedSystems.Remove(name);
+        }
+
+        /// <summary>
+        /// Get ecs system from list.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public EcsSystems GetNamedSystems(string name)
+        {
+            EcsSystems system = default;
+            NamedSystems.TryGetValue(name, out system);
+            return system;
         }
 
         /// <summary>
