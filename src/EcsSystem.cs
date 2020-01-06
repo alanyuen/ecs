@@ -158,6 +158,18 @@ namespace Leopotam.Ecs {
         }
 
         /// <summary>
+        /// Sets all IEcsRunSystem active state.
+        /// </summary>
+        /// <param name="state">New state of system.</param>
+        public void SetRunSystemStateAll(bool state)
+        {
+            for(int idx = 0; idx < _runSystems.Count; idx++)
+            {
+                _runSystems.Items[idx].Active = state;
+            }
+        }
+
+        /// <summary>
         /// Gets IEcsRunSystem active state.
         /// </summary>
         /// <param name="idx">Index of system.</param>
