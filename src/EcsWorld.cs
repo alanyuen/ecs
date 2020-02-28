@@ -293,18 +293,7 @@ namespace Leopotam.Ecs {
             NamedSystems.TryGetValue(name, out system);
             return system;
         }
-
-        /// <summary>
-        /// Creates one-frame filter if not exists.
-        /// </summary>
-        [Obsolete ("Use EcsSystems.OneFrame() for register one-frame components and Run() for processing and cleanup.")]
-        internal void ValidateOneFrameFilter<T> () where T : class {
-            var idx = EcsComponentType<T>.TypeIndex;
-            if (!OneFrameFilters.ContainsKey (idx)) {
-                OneFrameFilters[idx] = GetFilter (typeof (EcsFilter<T>));
-            }
-        }
-
+		
         /// <summary>
         /// Recycles internal entity data to pool.
         /// </summary>
